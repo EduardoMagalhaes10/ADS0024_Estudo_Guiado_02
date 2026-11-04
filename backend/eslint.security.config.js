@@ -7,6 +7,9 @@ const globals = require('globals');
 module.exports = [
   { ignores: ['node_modules/', 'data/', 'tests/'] },
   security.configs.recommended,
+    // O comentário de supressão do SAST só tem efeito em 'npm run sast'; no lint comum
+  // a regra não está ativa e o aviso de "diretiva sem uso" seria ruído.
+  { linterOptions: { reportUnusedDisableDirectives: 'off' } },
   {
     files: ['**/*.js'],
     languageOptions: {

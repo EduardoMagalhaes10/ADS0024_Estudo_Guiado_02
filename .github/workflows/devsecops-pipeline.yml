@@ -67,9 +67,9 @@ jobs:
       # SAST. Comando ORIGINAL: qualquer alerta (warning) reprova o pipeline.
       - name: SAST - Análise estática (ESLint Security)
         working-directory: backend
-        # run: npm run sast
+        run: npm run sast
         # Comando ALTERADO (demonstração da Seção 9): só mostra o relatório e não bloqueia.
-        run: npm run sast:report
+        # run: npm run sast:report
 
       # SCA: falha se houver vulnerabilidade HIGH ou CRITICAL nas dependências de produção.
       - name: SCA - Dependências (npm audit)

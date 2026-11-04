@@ -4,12 +4,12 @@
 // Assim, os testes conseguem alternar a flag e, em produção, basta reiniciar
 // o container com outro valor de ambiente: não é preciso novo build nem novo deploy
 // de código, só uma mudança de configuração.
-function isEnabled(nome) {
-  return String(process.env[nome] || 'false').toLowerCase() === 'true';
+function isEnabled(valor) {
+  return String(valor || 'false').toLowerCase() === 'true';
 }
 
 function descontoPromoAtivo() {
-  return isEnabled('FEATURE_DESCONTO_PROMO');
+  return isEnabled(process.env.FEATURE_DESCONTO_PROMO);
 }
 
 // Percentual de desconto da promoção (10%).
