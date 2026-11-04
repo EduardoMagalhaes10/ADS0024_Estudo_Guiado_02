@@ -5,6 +5,7 @@ const security = require('eslint-plugin-security');
 module.exports = [
   { ignores: ['node_modules/', 'data/'] },
   js.configs.recommended,
+    { linterOptions: { reportUnusedDisableDirectives: 'off' } },
   {
     files: ['**/*.js'],
     // Só registra o plugin (sem ativar regras) para os comentários de supressão do SAST
