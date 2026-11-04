@@ -9,13 +9,17 @@ ENV NODE_ENV=production \
     FEATURE_DESCONTO_PROMO=false
 
 # Correção de vulnerabilidades do sistema operacional (Seção 9, análise com Trivy).
-# Descomente esta linha caso o Trivy aponte pacotes do Alpine com "Fixed Version".
-# RUN apk upgrade --no-cache
+RUN apk upgrade --no-cache
 
 # Copiar só os manifestos primeiro aproveita o cache de camadas do Docker:
 # se o código mudar mas as dependências não, o 'npm ci' não roda de novo.
 COPY backend/package.json backend/package-lock.json ./
-RUN npm ci --omit=dev
+# Depois de instalar as dependências, remove o npm/yarn da imagem final: o app roda
+# só com 'node', e as ferramentas de build carregam pacotes com vulnerabilidades.
+RUN npm ci --omit=dev \
+ && npm cache clean --force \
+ && rm -rf /usr/local/lib/node_modules/npm /usr/local/bin/npm /usr/local/bin/npx \
+           /opt/yarn-* /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
 COPY backend/src ./src
 
